@@ -1,0 +1,49 @@
+# Default configuration — mirrors the dataclass tree in src/acagent/config.py.
+# Unknown keys are rejected by the loader; missing keys take dataclass defaults.
+# Invariant 2: sac.gamma is read once per run and never appears in a sweep space.
+
+seed: 42
+
+session:
+  root_dir: sessions
+  checkpoint_interval_s: 900.0        # SPEC §6
+  buffer_snapshot_interval_s: 900.0   # SPEC §6: default 15 min
+
+io:
+  telemetry_port: 47800               # localhost UDP, AcBridge -> Python
+  telemetry_rate_hz: 60.0             # SPEC §4 Module A: 60 Hz poll rate
+  failsafe_timeout_ms: 250.0          # SPEC §4 Module A failsafe threshold
+  steering_ema_enabled: false         # SPEC Module A: optional, default off
+  steering_ema_coef: 0.5
+
+sac:
+  gamma: 0.99                         # discount factor — fixed per run (Invariant 2)
+  lr: 3.0e-4
+  batch_size: 256
+  tau: 0.005
+  hidden_sizes: [256, 256]
+  entropy_coef_init: 1.0
+  target_entropy: null                # null = automatic (-dim(action space))
+  grad_clip: 10.0
+
+per:
+  capacity: 1000000                   # SPEC §4 Module C: ~1e6 transitions in RAM
+  alpha: 0.6                          # priority exponent (Schaul et al., 2015)
+  beta_start: 0.4                     # IS-weight annealing
+  beta_end: 1.0
+  beta_anneal_steps: 1000000
+  priority_epsilon: 1.0e-6
+
+reward:                               # SPEC §5; weights are w_* (Invariant 9)
+  w_v: 1.0                            # progress rate (must dominate at racing speed)
+  w_b: 1.0                            # boundary-proximity shaping penalty
+  w_T: 10.0                           # terminal track-limit violation
+  w_s: 0.1                            # tyre-slip excess
+  w_a: 0.1                            # action-jitter (squared action delta)
+  k: 0.5                              # warning-band decay for exp(-k * D_bnd)
+  potential_based_boundary: false     # SPEC §5 optional PBRS variant
+
+trainer:
+  control_rate_hz: 60.0               # SPEC §2: 16.7 ms per control step
+  utd_ratio: 1.0                      # SPEC §3: default 1 grad step per env step
+  burst_mode: false                   # SPEC §3 mitigation 4: pit-lane burst training
