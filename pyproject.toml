@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "acagent"
+version = "0.1.0"
+description = "AC DRL Racing Agent — Autonomous Contextual SAC for Assetto Corsa"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "torch>=2.8",
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "gymnasium>=1.0",
+    "pyyaml>=6.0",
+    "optuna>=3.6",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+# Windows-only, import-guarded (CLAUDE.md Invariant 8): requires the vJoy
+# driver, which only the user installs. Never a default-test dependency.
+hil = [
+    "pyvjoy>=1.0.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers"
+markers = [
+    "unit: default unit tests; no AC, vJoy, GPU, or network required",
+    "integration: needs the dotnet SDK and/or localhost loopback",
+    "gpu: needs the ROCm GPU on the target machine",
+    "hil: hardware-in-the-loop; needs Assetto Corsa and the user",
+    "phase0: Phase 0 gate suite (G0.A)",
+    "phase1: Phase 1 gate suite (G1.A)",
+    "phase1b: Phase 1b gate suite (G1b.A)",
+    "phase2: Phase 2 gate suite (G2.A)",
+    "phase3: Phase 3 gate suite (G3.A)",
+    "phase4: Phase 4 gate suite (G4.A)",
+    "phase5: Phase 5 gate suite (G5.A)",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]

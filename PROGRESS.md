@@ -6,7 +6,7 @@ Claude Code: update this file after every completed task and every gate result. 
 
 | Phase | Scope | Automated gate | HIL gate | Status |
 |-------|-------|----------------|----------|--------|
-| 0  | Scaffold, checkpointing, crash resilience | `pytest -m phase0` | — (none) | ☐ not started |
+| 0  | Scaffold, checkpointing, crash resilience | `pytest -m phase0` | — (none) | ◐ in progress |
 | 1  | Telemetry bridge, actuator, failsafe, reset | `pytest -m phase1` | `scripts/hil_phase1.py` (2 h hold) | ☐ not started |
 | 1b | Setup-apply spike | `pytest -m phase1b` | `scripts/hil_phase1b.py` (pressure change verified) | ☐ not started |
 | 2  | Spline pipeline, normalization, GPU proofing | `pytest -m phase2` | `scripts/hil_phase2_endurance.py` (1 h, zero TDR) | ☐ not started |
@@ -19,6 +19,8 @@ Status values: `☐ not started` → `◐ in progress` → `✅ A-gate passed` �
 ## Task log
 
 <!-- Append entries newest-first: date, phase, task ID, one-line result, commit hash. -->
+
+- 2026-06-12 · P0 · T0.1 · Repo scaffold: git init + docs commit (5a7d5f2), pyproject (deps, pytest markers, ruff), package skeleton, conftest, REFERENCES.md stub, .venv on Python 3.12.10, smoke tests pass, ruff clean. · (this commit)
 
 ## Gate results
 
