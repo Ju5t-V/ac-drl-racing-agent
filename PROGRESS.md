@@ -6,7 +6,7 @@ Claude Code: update this file after every completed task and every gate result. 
 
 | Phase | Scope | Automated gate | HIL gate | Status |
 |-------|-------|----------------|----------|--------|
-| 0  | Scaffold, checkpointing, crash resilience | `pytest -m phase0` | — (none) | ◐ in progress |
+| 0  | Scaffold, checkpointing, crash resilience | `pytest -m phase0` | — (none) | ✅✅ complete (A-gate passed 2026-06-13; no HIL gate) |
 | 1  | Telemetry bridge, actuator, failsafe, reset | `pytest -m phase1` | `scripts/hil_phase1.py` (2 h hold) | ☐ not started |
 | 1b | Setup-apply spike | `pytest -m phase1b` | `scripts/hil_phase1b.py` (pressure change verified) | ☐ not started |
 | 2  | Spline pipeline, normalization, GPU proofing | `pytest -m phase2` | `scripts/hil_phase2_endurance.py` (1 h, zero TDR) | ☐ not started |
@@ -20,6 +20,7 @@ Status values: `☐ not started` → `◐ in progress` → `✅ A-gate passed` �
 
 <!-- Append entries newest-first: date, phase, task ID, one-line result, commit hash. -->
 
+- 2026-06-13 · P0 · gate · test_phase0_gate.py: (1) full checkpoint+buffer round-trip into fresh objects with exact equality + RNG-draw continuation; (2) kill–resume N+M seed-for-seed vs uninterrupted; (3) watchdog restarts crashing dummy trainer, resume signal verified, cross-process trajectory bit-identical. · (this commit)
 - 2026-06-13 · P0 · T0.8 · session/watchdog.py: supervisor restarts crashing child with backoff/cap, ACAGENT_RESUMED/RESTART_COUNT resume signal, stop() path; dummy-child tests incl. resume reporting. 8 tests pass. · (this commit)
 - 2026-06-13 · P0 · T0.7 · session/buffer_store.py: cadenced .npy snapshots (manifest-last consistency protocol, temp-dir rename), latest-consistent load skipping torn snapshots, mmap option, keep_last retention. 13 tests pass. · (this commit)
 - 2026-06-13 · P0 · T0.6 · session/checkpoint.py: TrainingState (networks/optimizers/entropy coef/PER state/counters/RNG), atomic save, list/load-latest with corrupt-file fallback, optional keep_last pruning (Invariant 10). 9 tests pass incl. exact-equality round-trip into fresh objects. · (this commit)
@@ -32,6 +33,8 @@ Status values: `☐ not started` → `◐ in progress` → `✅ A-gate passed` �
 ## Gate results
 
 <!-- Append full gate outcomes here: command, pass/fail, notes, and for HIL gates the user's reported observations. -->
+
+- 2026-06-13 · **G0.A PASS** · `pytest -m phase0` → 92 passed in 15.65s (Python 3.12.10, CPU torch 2.12.0, Windows 11). Default suite `pytest -m "not gpu and not hil"` → 92 passed. `ruff check` + `ruff format --check` clean. G0.H: none (headless phase). Phase 0 complete.
 
 ## Open issues / deviations from plan
 

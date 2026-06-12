@@ -27,14 +27,14 @@ runs = int(runs_file.read_text()) if runs_file.exists() else 0
 runs_file.write_text(str(runs + 1))
 
 (state_dir / f"env_{runs}.txt").write_text(
-    os.environ["%(resumed)s"] + "," + os.environ["%(count)s"]
+    os.environ["__RESUMED__"] + "," + os.environ["__COUNT__"]
 )
 
 if runs < crash_until:
     sys.exit(1)
 (state_dir / "success.txt").write_text("ok")
 sys.exit(0)
-""" % {"resumed": RESUMED_ENV, "count": RESTART_COUNT_ENV}
+""".replace("__RESUMED__", RESUMED_ENV).replace("__COUNT__", RESTART_COUNT_ENV)
 
 
 @pytest.fixture()
