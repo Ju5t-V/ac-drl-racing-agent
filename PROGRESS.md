@@ -20,6 +20,7 @@ Status values: `☐ not started` → `◐ in progress` → `✅ A-gate passed` �
 
 <!-- Append entries newest-first: date, phase, task ID, one-line result, commit hash. -->
 
+- 2026-06-13 · P0 · T0.7 · session/buffer_store.py: cadenced .npy snapshots (manifest-last consistency protocol, temp-dir rename), latest-consistent load skipping torn snapshots, mmap option, keep_last retention. 13 tests pass. · (this commit)
 - 2026-06-13 · P0 · T0.6 · session/checkpoint.py: TrainingState (networks/optimizers/entropy coef/PER state/counters/RNG), atomic save, list/load-latest with corrupt-file fallback, optional keep_last pruning (Invariant 10). 9 tests pass incl. exact-equality round-trip into fresh objects. · (this commit)
 - 2026-06-13 · P0 · T0.5 · session/metadata.py: run_metadata.json (config snapshot, normalization placeholder, versions, git hash) + atomic.py shared atomic-write helper; update_metadata for later phases. 9 tests pass. · (this commit)
 - 2026-06-12 · P0 · T0.4 · session/paths.py: session_YYYYMMDD layout (+_NN collision suffix), open/create, latest-session discovery ignoring non-session entries. 11 tests pass. · (this commit)
