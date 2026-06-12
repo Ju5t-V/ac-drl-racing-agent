@@ -20,6 +20,7 @@ Status values: `☐ not started` → `◐ in progress` → `✅ A-gate passed` �
 
 <!-- Append entries newest-first: date, phase, task ID, one-line result, commit hash. -->
 
+- 2026-06-12 · P0 · T0.4 · session/paths.py: session_YYYYMMDD layout (+_NN collision suffix), open/create, latest-session discovery ignoring non-session entries. 11 tests pass. · (this commit)
 - 2026-06-12 · P0 · T0.3 · rng.py RngManager: named numpy/torch child generators derived from (seed, name), globals seeded, full state export/import (Invariants 7, 10). 13 tests pass. · (this commit)
 - 2026-06-12 · P0 · T0.2 · config.py dataclass tree + configs/default.yaml; loader rejects unknown keys with path, strict types, range validation; γ and all w_* present; frozen (Invariant 2). 24 tests pass. · (this commit)
 - 2026-06-12 · P0 · T0.1 · Repo scaffold: git init + docs commit (5a7d5f2), pyproject (deps, pytest markers, ruff), package skeleton, conftest, REFERENCES.md stub, .venv on Python 3.12.10, smoke tests pass, ruff clean. · (this commit)
